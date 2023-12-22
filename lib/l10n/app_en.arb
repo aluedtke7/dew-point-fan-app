@@ -1,0 +1,106 @@
+{
+  "title": "Dew Point Fan",
+  "com_ok": "Ok",
+  "com_cancel": "Cancel",
+  "com_yes": "Yes",
+  "com_no": "No",
+  "com_back": "Back",
+  "com_confirmation": "Confirmation",
+  "com_from": "From",
+  "com_to": "To",
+  "com_change_theme": "Change theme",
+  "com_change_language": "Change language",
+  "c_c_daterange": "Date range",
+  "@c_c_daterange": {
+    "description": "translations for date range enumeration"
+  },
+  "c_c_dateranges": "{dr, select, other{Today} yesterday{Yesterday} thisWeek{This Week} lastWeek{Last Week} thisMonth{This Month} lastMonth{Last Month} thisYear{This Year} lastYear{Last Year} last7days{Last 7 Days} last14days{Last 14 Days} last30days{Last 30 Days} last100days{Last 100 Days} last365days{Last 365 Days} allDays{All Days}}",
+  "@c_c_dateranges": {
+    "placeholders": {
+      "dr": {}
+    }
+  },
+  "c_drawer_version": "Version {v}",
+  "@c_drawer_version": {
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "fan_is": "Fan is {bool, select, other{} false{OFF} true{ON}}",
+  "@fan_is": {
+    "placeholders": {
+      "bool": {}
+    }
+  },
+  "manual_override": "{bool, select, other{} false{No} true{Manual}} override",
+  "@manual_override": {
+    "placeholders": {
+      "bool": {}
+    }
+  },
+  "remote_override": "Remote override is {count, plural, =0{automatic} =1{ON} other{OFF}}",
+  "@remote_override": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "location": "Location: {bool, select, other{} false{Inside} true{Outside}}",
+  "@location": {
+    "placeholders": {
+      "bool": {}
+    }
+  },
+  "temperature": "Temperature: {val} °C",
+  "@temperature": {
+    "placeholders": {
+      "val": {
+        "type": "double"
+      }
+    }
+  },
+  "humidity": "Humidity: {val} %",
+  "@humidity": {
+    "placeholders": {
+      "val": {
+        "type": "double"
+      }
+    }
+  },
+  "dew_point": "Dew point: {val}",
+  "@dew_point": {
+    "placeholders": {
+      "val": {
+        "type": "double"
+      }
+    }
+  },
+  "difference": "Dew point difference: {val}",
+  "@difference": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "hysteresis": "Hysteresis: {val}",
+  "@hysteresis": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "update": "Update: {str}",
+  "@update": {
+    "placeholders": {
+      "str": {
+        "type": "String"
+      }
+    }
+  },
+  "action_auto": "automatic",
+  "action_on": "force on",
+  "action_off": "force off"
+}
