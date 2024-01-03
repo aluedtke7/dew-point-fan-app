@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:dpfa/bloc/selected_override_bloc.dart';
 import 'package:dpfa/components/i18n_util.dart';
-import 'package:dpfa/provider/dew_point_provider.dart';
+import 'package:dpfa/repository/dew_point_repository.dart';
 
-class ActionChoice extends ConsumerStatefulWidget {
+class ActionChoice extends StatefulWidget {
   const ActionChoice({super.key});
 
   @override
-  ConsumerState<ActionChoice> createState() => _ActionChoiceState();
+  State<ActionChoice> createState() => _ActionChoiceState();
 }
 
-class _ActionChoiceState extends ConsumerState<ActionChoice> {
+class _ActionChoiceState extends State<ActionChoice> {
+  final dewPointRepo = DewPointRepository();
+
   @override
   Widget build(BuildContext context) {
-    final selectedOverrideRef = ref.watch(selectedOverrideProvider);
-
     return SegmentedButton<int>(
       segments: <ButtonSegment<int>>[
         ButtonSegment<int>(
@@ -34,15 +35,12 @@ class _ActionChoiceState extends ConsumerState<ActionChoice> {
           icon: const Icon(Icons.mode_fan_off),
         ),
       ],
-      selected: <int>{selectedOverrideRef},
+      selected: <int>{BlocProvider.of<SelectedOverrideBloc>(context, listen: true).state.data},
       onSelectionChanged: (Set<int> newSelection) {
-        setState(() {
-          // By default there is only a single segment that can be
-          // selected at one time, so its value is always the first
-          // item in the selected set.
-          // widget.selectedAction = newSelection.first;
-          ref.read(dewPointDataProvider.notifier).setOverride(newSelection.first);
-        });
+        // By default there is only a single segment that can be
+        // selected at one time, so its value is always the first
+        // item in the selected set.
+        dewPointRepo.setOverride(newSelection.first);
       },
     );
   }
