@@ -24,6 +24,8 @@ class DewPointRepository {
       if (dpd != null) {
         debugPrint('Fetched data: ${dpd.update}');
         yield dpd;
+      } else {
+        yield DewPointData();
       }
       await Future<void>.delayed(const Duration(seconds: 5));
     }

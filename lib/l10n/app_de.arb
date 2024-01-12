@@ -21,7 +21,7 @@
   "humidity": "Luftfeuchtigkeit: {val} %",
   "dew_point": "Taupunkt: {val}",
   "difference": "Taupunkt Differenz: {val}",
-  "hysteresis": "Hysterese: {val}",
+  "hysteresis": "Min. Differenz/Hysterese: {diff} / {hist}",
   "update": "Aktualisierung: {str}",
   "action_auto": "auto",
   "action_on": "immer an",

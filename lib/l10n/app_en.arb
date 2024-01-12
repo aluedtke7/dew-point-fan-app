@@ -80,14 +80,17 @@
   "@difference": {
     "placeholders": {
       "val": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "hysteresis": "Hysteresis: {val}",
+  "hysteresis": "Min. difference/hysteresis: {diff} / {hist}",
   "@hysteresis": {
     "placeholders": {
-      "val": {
+      "diff": {
+        "type": "int"
+      },
+      "hist": {
         "type": "int"
       }
     }
