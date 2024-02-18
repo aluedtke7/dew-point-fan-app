@@ -95,7 +95,7 @@ BEGIN
             VALUE "InternalName", "dpfa" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 de.luedtke. All rights reserved." "\0"
             VALUE "OriginalFilename", "dpfa.exe" "\0"
-            VALUE "ProductName", "dpfa" "\0"
+            VALUE "ProductName", "DPFA" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
