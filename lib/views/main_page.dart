@@ -62,7 +62,7 @@ class _MainPageState extends State<MainPage> {
         decoration: Theme.of(context).useMaterial3
             ? null
             : BoxDecoration(
-                color: const Color.fromARGB(255, 200, 200, 200).withOpacity(0.9),
+                color: const Color.fromARGB(255, 200, 200, 200).withValues(alpha: 0.9),
               ),
         child: Column(
           children: [

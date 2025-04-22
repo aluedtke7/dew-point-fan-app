@@ -1,6 +1,7 @@
 # Dew Point Fan Application
 ## Overview
-This is the companion app for the [Dew Point Fan project](https://github.com/aluedtke7/dew-point-fan).
+This is the companion app for the [Dew Point Fan controller](https://github.com/aluedtke7/dew-point-fan) and for the 
+[Dew Point Fan Bluetooth controller](https://github.com/aluedtke7/dew-point-fan-bt). 
 The main purpose is to show the current temperature and humidity values together with the calculated
 dew points for inside and outside. And most important: is the fan on or off!
 
