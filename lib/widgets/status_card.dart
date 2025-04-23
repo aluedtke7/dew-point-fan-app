@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-
 import 'package:dpfa/components/i18n_util.dart';
-import 'package:dpfa/models/extensions.dart';
 import 'package:dpfa/models/dew_point_data.dart';
+import 'package:dpfa/models/extensions.dart';
+import 'package:flutter/material.dart';
 
 class StatusCard extends StatelessWidget {
   const StatusCard({
@@ -33,6 +32,13 @@ class StatusCard extends StatelessWidget {
                     i18n(context).fan_is(dewPointData.venting.toString()),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                     textScaler: const TextScaler.linear(1.5),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    i18n(context).reasons(dewPointData.reason.toString()),
+                    textScaler: const TextScaler.linear(1.2),
                   ),
                 ),
                 Text(i18n(context).manual_override(dewPointData.override.toString())),

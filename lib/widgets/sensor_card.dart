@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:dpfa/components/i18n_util.dart';
 import 'package:dpfa/models/sensor_data.dart';
+import 'package:flutter/material.dart';
 
 class SensorCard extends StatelessWidget {
   const SensorCard({

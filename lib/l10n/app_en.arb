@@ -10,24 +10,6 @@
   "com_to": "To",
   "com_change_theme": "Change theme",
   "com_change_language": "Change language",
-  "c_c_daterange": "Date range",
-  "@c_c_daterange": {
-    "description": "translations for date range enumeration"
-  },
-  "c_c_dateranges": "{dr, select, other{Today} yesterday{Yesterday} thisWeek{This Week} lastWeek{Last Week} thisMonth{This Month} lastMonth{Last Month} thisYear{This Year} lastYear{Last Year} last7days{Last 7 Days} last14days{Last 14 Days} last30days{Last 30 Days} last100days{Last 100 Days} last365days{Last 365 Days} allDays{All Days}}",
-  "@c_c_dateranges": {
-    "placeholders": {
-      "dr": {}
-    }
-  },
-  "c_drawer_version": "Version {v}",
-  "@c_drawer_version": {
-    "placeholders": {
-      "v": {
-        "type": "String"
-      }
-    }
-  },
   "fan_is": "Fan is {bool, select, other{} false{OFF} true{ON}}",
   "@fan_is": {
     "placeholders": {
@@ -84,7 +66,7 @@
       }
     }
   },
-  "hysteresis": "Min. difference/hysteresis: {diff} / {hist}",
+  "hysteresis": "Min. difference / hysteresis: {diff} / {hist}",
   "@hysteresis": {
     "placeholders": {
       "diff": {
@@ -105,5 +87,11 @@
   },
   "action_auto": "automatic",
   "action_on": "force on",
-  "action_off": "force off"
+  "action_off": "force off",
+  "reasons": "{idx, select, 0{None} 1{No data} 2{Not enough data} 3{Dewpoint > hysteresis} 4{Dewpoint < hysteresis} 5{Dewpoint in between} 6{Inside temperature too low} 7{Outside temperature too low} 8{Inside humidity too low} other{Unknown}}",
+  "@reasons": {
+    "placeholders": {
+      "idx": {}
+    }
+  }
 }

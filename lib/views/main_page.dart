@@ -1,9 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:intl/intl.dart';
-import 'package:theme_provider/theme_provider.dart';
-
 import 'package:dpfa/application.dart';
 import 'package:dpfa/bloc/dew_point_bloc.dart';
 import 'package:dpfa/components/i18n_util.dart';
@@ -11,6 +5,10 @@ import 'package:dpfa/repository/dew_point_repository.dart';
 import 'package:dpfa/widgets/action_choice.dart';
 import 'package:dpfa/widgets/sensor_card.dart';
 import 'package:dpfa/widgets/status_card.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

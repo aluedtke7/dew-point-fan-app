@@ -3,6 +3,7 @@ import 'package:dpfa/models/sensor_data.dart';
 class DewPointData {
   DateTime? update;
   List<SensorData> sensors = <SensorData>[];
+  int reason = 0;
   bool venting = false;
   bool override = false;
   int remoteOverride = 0;
@@ -12,6 +13,7 @@ class DewPointData {
   DewPointData({
     this.update,
     this.sensors = const [],
+    this.reason = 0,
     this.venting = false,
     this.override = false,
     this.remoteOverride = 0,
@@ -19,12 +21,15 @@ class DewPointData {
     this.hysteresis = 0,
   });
 
-  factory DewPointData.fromJson(Map<String, dynamic> json){
+  factory DewPointData.fromJson(Map<String, dynamic> json) {
     List<dynamic> sensorData = json['sensors'];
     sensorData.removeWhere((element) => element == null);
     return DewPointData(
       update: DateTime.tryParse(json['update'] ?? ''),
-      sensors: sensorData.isEmpty ? [] : sensorData.map((e) => SensorData.fromJson(e)).toList(),
+      sensors: sensorData.isEmpty
+          ? []
+          : sensorData.map((e) => SensorData.fromJson(e)).toList(),
+      reason: json['reason'] ?? 0,
       venting: json['venting'],
       override: json['override'],
       remoteOverride: json['remote_override'] ?? 0,
