@@ -88,7 +88,7 @@
   "action_auto": "automatic",
   "action_on": "force on",
   "action_off": "force off",
-  "reasons": "{idx, select, 0{None} 1{No data} 2{Not enough data} 3{Dewpoint > hysteresis} 4{Dewpoint < hysteresis} 5{Dewpoint in between} 6{Inside temperature too low} 7{Outside temperature too low} 8{Inside humidity too low} other{Unknown}}",
+  "reasons": "{idx, select, 0{None} 1{No data} 2{Not enough data} 3{Dewpoint > hysteresis} 4{Dewpoint < hysteresis} 5{Dewpoint in between} 6{Inside temperature too low} 7{Outside temperature too low} 8{Inside humidity too low} 9{Soft override on} 10{Soft override off} other{Unknown}}",
   "@reasons": {
     "placeholders": {
       "idx": {}

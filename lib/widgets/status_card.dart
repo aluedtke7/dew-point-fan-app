@@ -41,8 +41,8 @@ class StatusCard extends StatelessWidget {
                     textScaler: const TextScaler.linear(1.2),
                   ),
                 ),
-                Text(i18n(context).manual_override(dewPointData.override.toString())),
-                Text(i18n(context).remote_override(dewPointData.remoteOverride)),
+                // Text(i18n(context).manual_override(dewPointData.override.toString())),
+                // Text(i18n(context).remote_override(dewPointData.remoteOverride)),
                 Text(i18n(context).hysteresis(dewPointData.diffMin, dewPointData.hysteresis)),
                 if (dewPointData.sensors.length > 1)
                   Text(i18n(context).difference(
