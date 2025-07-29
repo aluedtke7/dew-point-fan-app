@@ -11,10 +11,12 @@ import 'package:dpfa/dew_point_observer.dart';
 import 'package:dpfa/repository/dew_point_repository.dart';
 import 'package:dpfa/specific_localization_delegate.dart';
 import 'package:dpfa/views/main_page.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:intl/intl.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -51,7 +53,7 @@ class _DewPointFanAppState extends State<DewPointFanApp> {
     APPLIC().onLocaleChanged = onLocaleChange;
   }
 
-  onLocaleChange(Locale locale) {
+  void onLocaleChange(Locale locale) {
     setState(() {
       _localeOverrideDelegate = SpecificLocalizationDelegate(locale);
     });

@@ -58,6 +58,30 @@
       }
     }
   },
+  "bat_level": "Bat. level: {val} Volt",
+  "@bat_level": {
+    "placeholders": {
+      "val": {
+        "type": "double"
+      }
+    }
+  },
+  "rssi": "RSSI: {val} dBm",
+  "@rssi": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "up_time": "Up time: {val} days",
+  "@up_time": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
   "difference": "Dew point difference: {val}",
   "@difference": {
     "placeholders": {

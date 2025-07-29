@@ -26,19 +26,50 @@ class SensorCard extends StatelessWidget {
                 ),
               ],
             ),
+            Divider(),
             Row(
+              spacing: 24,
               children: [
-                Text(i18n(context).temperature(sensorData.temperature)),
-              ],
-            ),
-            Row(
-              children: [
-                Text(i18n(context).humidity(sensorData.humidity)),
-              ],
-            ),
-            Row(
-              children: [
-                Text(i18n(context).dew_point(sensorData.dewPoint)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(i18n(context).temperature(sensorData.temperature)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(i18n(context).humidity(sensorData.humidity)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(i18n(context).dew_point(sensorData.dewPoint)),
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(i18n(context).up_time((sensorData.upTime / (24 * 60 * 60)).round())),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(i18n(context).rssi(sensorData.rssi)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(i18n(context).bat_level(sensorData.batLevel)),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ],
