@@ -10,6 +10,9 @@
   "com_to": "To",
   "com_change_theme": "Change theme",
   "com_change_language": "Change language",
+  "com_settings": "Settings",
+  "settings_url_label": "Target URL",
+  "settings_url_hint": "e.g. 192.168.1.100:8080",
   "fan_is": "Fan is {bool, select, other{} false{OFF} true{ON}}",
   "@fan_is": {
     "placeholders": {

@@ -1,6 +1,7 @@
 import 'package:dpfa/application.dart';
 import 'package:dpfa/bloc/dew_point_bloc.dart';
 import 'package:dpfa/components/i18n_util.dart';
+import 'package:dpfa/components/settings_dialog.dart';
 import 'package:dpfa/repository/dew_point_repository.dart';
 import 'package:dpfa/widgets/action_choice.dart';
 import 'package:dpfa/widgets/sensor_card.dart';
@@ -19,6 +20,8 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
+enum _MenuAction { changeTheme, changeLanguage, settings }
+
 class _MainPageState extends State<MainPage> {
   final dewPointRepo = DewPointRepository();
 
@@ -34,26 +37,50 @@ class _MainPageState extends State<MainPage> {
         title: Text(i18n(context).title),
         backgroundColor: Theme.of(context).useMaterial3 ? Theme.of(context).colorScheme.inversePrimary : null,
         actions: [
-          IconButton(
-            onPressed: () {
-              ThemeProvider.controllerOf(context).nextTheme();
-            },
-            icon: const Icon(Icons.color_lens),
-            tooltip: i18n(context).com_change_theme,
-          ),
-          IconButton(
-            onPressed: () {
-              if ((Intl.defaultLocale ?? '').contains('de')) {
-                Intl.defaultLocale = 'en';
-                APPLIC().onLocaleChanged(const Locale('en', ''));
-              } else {
-                Intl.defaultLocale = 'de';
-                APPLIC().onLocaleChanged(const Locale('de', ''));
+          PopupMenuButton<_MenuAction>(
+            onSelected: (action) {
+              switch (action) {
+                case _MenuAction.changeTheme:
+                  ThemeProvider.controllerOf(context).nextTheme();
+                  break;
+                case _MenuAction.changeLanguage:
+                  if ((Intl.defaultLocale ?? '').contains('de')) {
+                    Intl.defaultLocale = 'en';
+                    APPLIC().onLocaleChanged(const Locale('en', ''));
+                  } else {
+                    Intl.defaultLocale = 'de';
+                    APPLIC().onLocaleChanged(const Locale('de', ''));
+                  }
+                  break;
+                case _MenuAction.settings:
+                  showSettingsDialog(context, dewPointRepo);
+                  break;
               }
             },
-            icon: const Icon(Icons.language),
-            tooltip: i18n(context).com_change_language,
-          )
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: _MenuAction.changeTheme,
+                child: ListTile(
+                  leading: const Icon(Icons.color_lens),
+                  title: Text(i18n(context).com_change_theme),
+                ),
+              ),
+              PopupMenuItem(
+                value: _MenuAction.changeLanguage,
+                child: ListTile(
+                  leading: const Icon(Icons.language),
+                  title: Text(i18n(context).com_change_language),
+                ),
+              ),
+              PopupMenuItem(
+                value: _MenuAction.settings,
+                child: ListTile(
+                  leading: const Icon(Icons.settings),
+                  title: Text(i18n(context).com_settings),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       body: Container(
