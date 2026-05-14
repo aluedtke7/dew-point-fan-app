@@ -25,7 +25,10 @@ void main() async {
   Bloc.observer = const DewPointObserver();
   final dewPointRepo = DewPointRepository();
   await dewPointRepo.init();
-  runApp(const DewPointFanApp());
+  runApp(RepositoryProvider.value(
+    value: dewPointRepo,
+    child: const DewPointFanApp(),
+  ));
 }
 
 class DewPointFanApp extends StatefulWidget {
@@ -37,7 +40,6 @@ class DewPointFanApp extends StatefulWidget {
 
 class _DewPointFanAppState extends State<DewPointFanApp> {
   late SpecificLocalizationDelegate _localeOverrideDelegate;
-  final dewPointRepo = DewPointRepository();
 
   @override
   void initState() {
@@ -84,19 +86,20 @@ class _DewPointFanAppState extends State<DewPointFanApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: APPLIC().supportedLocales(),
-            home: BlocProvider(
-              create: (BuildContext ctx) {
-                var bloc = DewPointBloc(repo: dewPointRepo);
-                bloc.add(const DewPointNewData());
-                return bloc;
-              },
-              child: BlocProvider(
-                  create: (BuildContext ctx) {
-                    var bloc = SelectedOverrideBloc(repo: dewPointRepo);
-                    bloc.add(const SelectedOverrideNewData());
-                    return bloc;
-                  },
-                  child: const MainPage()),
+            home: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => DewPointBloc(
+                    repo: RepositoryProvider.of<DewPointRepository>(context),
+                  )..add(const DewPointNewData()),
+                ),
+                BlocProvider(
+                  create: (context) => SelectedOverrideBloc(
+                    repo: RepositoryProvider.of<DewPointRepository>(context),
+                  )..add(const SelectedOverrideNewData()),
+                ),
+              ],
+              child: const MainPage(),
             ),
           );
         }),

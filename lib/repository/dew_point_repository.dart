@@ -9,22 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DewPointRepository {
   String dewPointFanUrl = '';
   static const String _urlKey = 'DEW_POINT_FAN_URL';
-  static final DewPointRepository _instance = DewPointRepository._internal();
   final http.Client _client;
 
-  factory DewPointRepository({http.Client? client}) {
-    if (client != null) {
-      return DewPointRepository._withClient(client);
-    }
-    return _instance;
-  }
-
-  DewPointRepository._internal()
-      : _client = http.Client(),
+  DewPointRepository({http.Client? client})
+      : _client = client ?? http.Client(),
         dewPointFanUrl = const String.fromEnvironment(_urlKey, defaultValue: 'localhost:8080');
-
-  DewPointRepository._withClient(this._client)
-      : dewPointFanUrl = const String.fromEnvironment(_urlKey, defaultValue: 'localhost:8080');
 
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();

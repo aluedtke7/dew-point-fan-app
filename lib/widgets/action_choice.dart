@@ -4,18 +4,13 @@ import 'package:dpfa/repository/dew_point_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ActionChoice extends StatefulWidget {
+class ActionChoice extends StatelessWidget {
   const ActionChoice({super.key});
 
   @override
-  State<ActionChoice> createState() => _ActionChoiceState();
-}
-
-class _ActionChoiceState extends State<ActionChoice> {
-  final dewPointRepo = DewPointRepository();
-
-  @override
   Widget build(BuildContext context) {
+    final selectedValue = context.watch<SelectedOverrideBloc>().state.data;
+
     return SegmentedButton<int>(
       segments: <ButtonSegment<int>>[
         ButtonSegment<int>(
@@ -34,12 +29,12 @@ class _ActionChoiceState extends State<ActionChoice> {
           icon: const Icon(Icons.mode_fan_off),
         ),
       ],
-      selected: <int>{BlocProvider.of<SelectedOverrideBloc>(context, listen: true).state.data},
+      selected: <int>{selectedValue},
       onSelectionChanged: (Set<int> newSelection) {
         // By default there is only a single segment that can be
         // selected at one time, so its value is always the first
         // item in the selected set.
-        dewPointRepo.setOverride(newSelection.first);
+        context.read<DewPointRepository>().setOverride(newSelection.first);
       },
     );
   }

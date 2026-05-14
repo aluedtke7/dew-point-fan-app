@@ -1,5 +1,6 @@
 import 'package:dpfa/application.dart';
 import 'package:dpfa/bloc/dew_point_bloc.dart';
+import 'package:dpfa/bloc/dew_point_state.dart';
 import 'package:dpfa/components/i18n_util.dart';
 import 'package:dpfa/components/settings_dialog.dart';
 import 'package:dpfa/repository/dew_point_repository.dart';
@@ -11,24 +12,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
   static const routeName = '/';
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-enum _MenuAction { changeTheme, changeLanguage, settings }
-
-class _MainPageState extends State<MainPage> {
-  final dewPointRepo = DewPointRepository();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +40,7 @@ class _MainPageState extends State<MainPage> {
                   }
                   break;
                 case _MenuAction.settings:
-                  showSettingsDialog(context, dewPointRepo);
+                  showSettingsDialog(context, context.read<DewPointRepository>());
                   break;
               }
             },
@@ -89,20 +76,24 @@ class _MainPageState extends State<MainPage> {
             : BoxDecoration(
                 color: const Color.fromARGB(255, 200, 200, 200).withValues(alpha: 0.9),
               ),
-        child: Column(
-          children: [
-            StatusCard(dewPointData: BlocProvider.of<DewPointBloc>(context, listen: true).state.data),
-            if (BlocProvider.of<DewPointBloc>(context, listen: true).state.data.sensors.isNotEmpty)
-              SensorCard(sensorData: BlocProvider.of<DewPointBloc>(context, listen: true).state.data.sensors[0]),
-            if (BlocProvider.of<DewPointBloc>(context, listen: true).state.data.sensors.length > 1)
-              SensorCard(sensorData: BlocProvider.of<DewPointBloc>(context, listen: true).state.data.sensors[1]),
-            const SizedBox(
-              height: 16,
-            ),
-            const ActionChoice(),
-          ],
+        child: BlocBuilder<DewPointBloc, DewPointState>(
+          builder: (context, state) {
+            return Column(
+              children: [
+                StatusCard(dewPointData: state.data),
+                if (state.data.sensors.isNotEmpty) SensorCard(sensorData: state.data.sensors[0]),
+                if (state.data.sensors.length > 1) SensorCard(sensorData: state.data.sensors[1]),
+                const SizedBox(
+                  height: 16,
+                ),
+                const ActionChoice(),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 }
+
+enum _MenuAction { changeTheme, changeLanguage, settings }
