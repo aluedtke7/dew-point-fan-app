@@ -19,5 +19,8 @@ class SelectedOverrideBloc extends Bloc<SelectedOverrideEvent, SelectedOverrideS
       await emit.forEach(_dewPointRepository.dewPoints(),
           onData: (DewPointData dpd) => SelectedOverrideNew(dpd.remoteOverride));
     });
+    on<SelectedOverrideUserTap>((event, emit) {
+      emit(SelectedOverrideNew(state.data, disabled: true));
+    });
   }
 }

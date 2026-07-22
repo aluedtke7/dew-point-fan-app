@@ -1,4 +1,5 @@
 import 'package:dpfa/bloc/selected_override_bloc.dart';
+import 'package:dpfa/bloc/selected_override_event.dart';
 import 'package:dpfa/components/i18n_util.dart';
 import 'package:dpfa/repository/dew_point_repository.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ class ActionChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedValue = context.watch<SelectedOverrideBloc>().state.data;
+    final state = context.watch<SelectedOverrideBloc>().state;
 
     return SegmentedButton<int>(
       segments: <ButtonSegment<int>>[
@@ -29,13 +30,13 @@ class ActionChoice extends StatelessWidget {
           icon: const Icon(Icons.mode_fan_off),
         ),
       ],
-      selected: <int>{selectedValue},
-      onSelectionChanged: (Set<int> newSelection) {
-        // By default there is only a single segment that can be
-        // selected at one time, so its value is always the first
-        // item in the selected set.
-        context.read<DewPointRepository>().setOverride(newSelection.first);
-      },
+      selected: <int>{state.data},
+      onSelectionChanged: state.disabled
+          ? null
+          : (Set<int> newSelection) {
+              context.read<SelectedOverrideBloc>().add(const SelectedOverrideUserTap());
+              context.read<DewPointRepository>().setOverride(newSelection.first);
+            },
     );
   }
 }

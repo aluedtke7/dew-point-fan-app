@@ -9,3 +9,7 @@ final class SelectedOverrideInitial extends SelectedOverrideEvent {
 final class SelectedOverrideNewData extends SelectedOverrideEvent {
   const SelectedOverrideNewData();
 }
+
+final class SelectedOverrideUserTap extends SelectedOverrideEvent {
+  const SelectedOverrideUserTap();
+}
