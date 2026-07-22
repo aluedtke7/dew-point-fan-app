@@ -44,15 +44,18 @@ class DewPointRepository {
   }
 
   Stream<DewPointData> _dewPoints() async* {
+    var retryDelay = 1;
     while (true) {
       var dpd = await _fetchDewPoint();
       if (dpd != null) {
         debugPrint('Fetched data: ${dpd.update}');
         yield dpd;
+        retryDelay = 1;
         await Future<void>.delayed(const Duration(seconds: 5));
       } else {
         yield DewPointData();
-        await Future<void>.delayed(const Duration(milliseconds: 500));
+        await Future<void>.delayed(Duration(seconds: retryDelay));
+        retryDelay = (retryDelay * 2).clamp(1, 30);
       }
     }
   }
@@ -61,7 +64,11 @@ class DewPointRepository {
     try {
       debugPrint('Fetching dew point data from $dewPointFanUrl...');
       var url = Uri.http(dewPointFanUrl, '/info', {});
-      final response = await _client.get(url);
+      final response = await _client.get(url).timeout(const Duration(seconds: 3));
+      if (response.statusCode != 200) {
+        debugPrint('Unexpected status code: ${response.statusCode}');
+        return null;
+      }
       final obj = json.decode(response.body);
       if (obj != null) {
         final dpd = DewPointData.fromJson(obj);
@@ -81,7 +88,7 @@ class DewPointRepository {
       final response = await _client.post(
         url,
         body: body,
-      );
+      ).timeout(const Duration(seconds: 3));
       debugPrint('set override - status code: ${response.statusCode}');
     } catch (error) {
       debugPrint('Error posting override value: $error');

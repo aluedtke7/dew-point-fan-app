@@ -120,5 +120,6 @@
     "placeholders": {
       "idx": {}
     }
-  }
+  },
+  "disconnected": "Server unreachable"
 }

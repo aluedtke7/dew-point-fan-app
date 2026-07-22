@@ -80,6 +80,23 @@ class MainPage extends StatelessWidget {
           builder: (context, state) {
             return Column(
               children: [
+                if (state.data.update == null)
+                  Container(
+                    width: double.infinity,
+                    color: Colors.red.shade100,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.cloud_off, color: Colors.red.shade700, size: 20),
+                        const SizedBox(width: 8),
+                        Text(
+                          i18n(context).disconnected,
+                          style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
                 StatusCard(dewPointData: state.data),
                 if (state.data.sensors.isNotEmpty) SensorCard(sensorData: state.data.sensors[0]),
                 if (state.data.sensors.length > 1) SensorCard(sensorData: state.data.sensors[1]),

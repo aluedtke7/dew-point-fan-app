@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:dpfa/repository/dew_point_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -108,5 +109,45 @@ void main() {
       expect(data.update, isNull);
       expect(data.sensors, isEmpty);
     });
+
+    test('dewPoints stream emits empty data on non-200 with valid JSON', () async {
+      final mockClient = MockClient((request) async {
+        return http.Response('{"sensors": []}', 503);
+      });
+
+      final repo = DewPointRepository(client: mockClient);
+      
+      final data = await repo.dewPoints().first;
+      
+      expect(data.update, isNull);
+      expect(data.sensors, isEmpty);
+    });
+
+    test('dewPoints stream emits empty data on connection error', () async {
+      final mockClient = MockClient((request) async {
+        throw Exception('Connection refused');
+      });
+
+      final repo = DewPointRepository(client: mockClient);
+      
+      final data = await repo.dewPoints().first;
+      
+      expect(data.update, isNull);
+      expect(data.sensors, isEmpty);
+    });
+
+    test('dewPoints stream emits empty data on timeout', () async {
+      final completer = Completer<http.Response>();
+      final mockClient = MockClient((request) async {
+        return completer.future;
+      });
+
+      final repo = DewPointRepository(client: mockClient);
+      
+      final data = await repo.dewPoints().first;
+      
+      expect(data.update, isNull);
+      expect(data.sensors, isEmpty);
+    }, timeout: const Timeout(Duration(seconds: 10)));
   });
 }
