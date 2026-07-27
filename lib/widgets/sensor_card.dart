@@ -6,9 +6,14 @@ class SensorCard extends StatelessWidget {
   const SensorCard({
     super.key,
     required this.sensorData,
+    this.staleBy,
   });
 
   final SensorData sensorData;
+
+  /// How far this sensor's scan time lags the other sensor's. Non-null marks
+  /// this sensor as stale.
+  final Duration? staleBy;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +31,28 @@ class SensorCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (!sensorData.hasReading)
+              Row(
+                children: [
+                  Icon(Icons.sensors_off, color: Colors.red.shade700, size: 18),
+                  const SizedBox(width: 4),
+                  Text(
+                    i18n(context).no_sensor_data,
+                    style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              )
+            else if (staleBy != null)
+              Row(
+                children: [
+                  Icon(Icons.warning_amber, color: Colors.orange.shade800, size: 18),
+                  const SizedBox(width: 4),
+                  Text(
+                    i18n(context).stale_hint(staleBy!.inMinutes, staleBy!.inSeconds % 60),
+                    style: TextStyle(color: Colors.orange.shade800, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             Divider(),
             Row(
               spacing: 24,

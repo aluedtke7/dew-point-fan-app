@@ -121,5 +121,17 @@
       "idx": {}
     }
   },
-  "disconnected": "Server unreachable"
+  "disconnected": "Server unreachable",
+  "no_sensor_data": "No sensor data received",
+  "stale_hint": "Stale – {min} min {sec} s older",
+  "@stale_hint": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "sec": {
+        "type": "int"
+      }
+    }
+  }
 }

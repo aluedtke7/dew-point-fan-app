@@ -78,6 +78,8 @@ class MainPage extends StatelessWidget {
               ),
         child: BlocBuilder<DewPointBloc, DewPointState>(
           builder: (context, state) {
+            final staleIndex = state.data.staleSensorIndex;
+            final staleBy = state.data.scanGap;
             return Column(
               children: [
                 if (state.data.update == null)
@@ -98,8 +100,16 @@ class MainPage extends StatelessWidget {
                     ),
                   ),
                 StatusCard(dewPointData: state.data),
-                if (state.data.sensors.isNotEmpty) SensorCard(sensorData: state.data.sensors[0]),
-                if (state.data.sensors.length > 1) SensorCard(sensorData: state.data.sensors[1]),
+                if (state.data.sensors.isNotEmpty)
+                  SensorCard(
+                    sensorData: state.data.sensors[0],
+                    staleBy: staleIndex == 0 ? staleBy : null,
+                  ),
+                if (state.data.sensors.length > 1)
+                  SensorCard(
+                    sensorData: state.data.sensors[1],
+                    staleBy: staleIndex == 1 ? staleBy : null,
+                  ),
                 const SizedBox(
                   height: 16,
                 ),

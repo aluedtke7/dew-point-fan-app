@@ -30,5 +30,7 @@
   "action_on": "immer an",
   "action_off": "immer aus",
   "reasons": "{idx, select, 0{Nichts} 1{Keine Daten} 2{Nicht genug Daten} 3{Taupunkt > Hysterese} 4{Taupunkt < Hysterese} 5{Taupunkt innerhalb Bereich} 6{Innentemperatur zu gering} 7{Außentemperatur zu gering} 8{Innenfeuchtigkeit zu gering} 9{Übersteuerung ist AN} 10{Übersteuerung ist AUS}  other{Unbekannt}}",
-  "disconnected": "Server nicht erreichbar"
+  "disconnected": "Server nicht erreichbar",
+  "no_sensor_data": "Keine Sensordaten empfangen",
+  "stale_hint": "Veraltet – {min} Min {sec} s älter"
 }
