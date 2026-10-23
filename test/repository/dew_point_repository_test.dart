@@ -32,7 +32,7 @@ void main() {
       const testUrl = '192.168.1.100:8080';
       await repository.setUrl(testUrl);
       expect(repository.dewPointFanUrl, equals(testUrl));
-      
+
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getString('DEW_POINT_FAN_URL'), equals(testUrl));
     });
@@ -48,10 +48,10 @@ void main() {
     test('init loads URL from SharedPreferences', () async {
       const savedUrl = 'saved.local:9000';
       SharedPreferences.setMockInitialValues({'DEW_POINT_FAN_URL': savedUrl});
-      
+
       final newRepo = DewPointRepository();
       await newRepo.init();
-      
+
       expect(newRepo.dewPointFanUrl, equals(savedUrl));
     });
 
@@ -88,10 +88,10 @@ void main() {
       });
 
       final repo = DewPointRepository(client: mockClient);
-      
+
       // Take the first event and verify it
       final data = await repo.dewPoints().first;
-      
+
       expect(data.venting, isTrue);
       expect(data.reason, equals(1));
     });
@@ -102,9 +102,9 @@ void main() {
       });
 
       final repo = DewPointRepository(client: mockClient);
-      
+
       final data = await repo.dewPoints().first;
-      
+
       // When fetch returns null, it yields DewPointData()
       expect(data.update, isNull);
       expect(data.sensors, isEmpty);
@@ -116,9 +116,9 @@ void main() {
       });
 
       final repo = DewPointRepository(client: mockClient);
-      
+
       final data = await repo.dewPoints().first;
-      
+
       expect(data.update, isNull);
       expect(data.sensors, isEmpty);
     });
@@ -129,9 +129,9 @@ void main() {
       });
 
       final repo = DewPointRepository(client: mockClient);
-      
+
       final data = await repo.dewPoints().first;
-      
+
       expect(data.update, isNull);
       expect(data.sensors, isEmpty);
     });
@@ -143,9 +143,9 @@ void main() {
       });
 
       final repo = DewPointRepository(client: mockClient);
-      
+
       final data = await repo.dewPoints().first;
-      
+
       expect(data.update, isNull);
       expect(data.sensors, isEmpty);
     }, timeout: const Timeout(Duration(seconds: 10)));

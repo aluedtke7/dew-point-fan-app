@@ -3,7 +3,33 @@ import 'package:theme_provider/theme_provider.dart';
 
 const bool useMaterial3 = true;
 
+const Color _teal = Color(0xFF0B7A84);
+
 var customThemes = [
+  AppTheme(
+    id: 'light-teal',
+    description: 'Light teal',
+    data: ThemeData(
+      useMaterial3: useMaterial3,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: _teal,
+        brightness: Brightness.light,
+        dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
+      ),
+    ),
+  ),
+  AppTheme(
+    id: 'dark-teal',
+    description: 'Dark teal',
+    data: ThemeData(
+      useMaterial3: useMaterial3,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: _teal,
+        brightness: Brightness.dark,
+        dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
+      ),
+    ),
+  ),
   AppTheme(
     id: 'light-green',
     description: 'Light green',
@@ -81,3 +107,14 @@ var customThemes = [
     ),
   ),
 ];
+
+extension AppColors on ColorScheme {
+  /// Background behind the cards of the main page.
+  Color get pageBackground => brightness == Brightness.light ? surfaceContainerLow : surface;
+
+  /// Fill of the cards, lifted off [pageBackground].
+  Color get cardBackground => brightness == Brightness.light ? surfaceContainerLowest : surfaceContainerHigh;
+
+  /// Marks stale data, readable on [cardBackground] and in the app bar.
+  Color get warning => brightness == Brightness.light ? Colors.orange.shade800 : Colors.orange.shade300;
+}

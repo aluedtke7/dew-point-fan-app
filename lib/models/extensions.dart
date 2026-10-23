@@ -28,3 +28,9 @@ extension DateFormatter on DateTime {
     return DateFormat('yMd', localeName).format(this);
   }
 }
+extension NumberFormatter on double {
+  /// Formats with a fixed number of [digits] and the decimal separator of [localeName].
+  String formatFixed(String localeName, [int digits = 1]) {
+    return NumberFormat.decimalPatternDigits(locale: localeName, decimalDigits: digits).format(this);
+  }
+}

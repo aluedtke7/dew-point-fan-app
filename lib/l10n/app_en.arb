@@ -13,8 +13,10 @@
   "com_settings": "Settings",
   "settings_url_label": "Target URL",
   "settings_url_hint": "e.g. 192.168.1.100:8080",
-  "fan_is": "Fan is {bool, select, other{} false{OFF} true{ON}}",
-  "@fan_is": {
+  "fan_unknown": "Unknown",
+  "fan_label": "Fan",
+  "fan_state": "{bool, select, other{} false{Off} true{Running}}",
+  "@fan_state": {
     "placeholders": {
       "bool": {}
     }
@@ -31,45 +33,24 @@
       "count": {}
     }
   },
-  "location": "Location: {bool, select, other{} false{Inside} true{Outside}}",
+  "location": "{bool, select, other{} false{Inside} true{Outside}}",
   "@location": {
     "placeholders": {
       "bool": {}
     }
   },
-  "temperature": "Temperature: {val} °C",
-  "@temperature": {
-    "placeholders": {
-      "val": {
-        "type": "double"
-      }
-    }
-  },
-  "humidity": "Humidity: {val} %",
-  "@humidity": {
-    "placeholders": {
-      "val": {
-        "type": "double"
-      }
-    }
-  },
-  "dew_point": "Dew point: {val}",
-  "@dew_point": {
-    "placeholders": {
-      "val": {
-        "type": "double"
-      }
-    }
-  },
-  "bat_level": "Bat. level: {val} Volt",
+  "humidity_label": "Humidity",
+  "dew_point_label": "Dew point",
+  "bat_level": "{val} V",
   "@bat_level": {
     "placeholders": {
       "val": {
-        "type": "double"
+        "type": "double",
+        "format": "decimalPattern"
       }
     }
   },
-  "rssi": "RSSI: {val} dBm",
+  "rssi": "{val} dBm",
   "@rssi": {
     "placeholders": {
       "val": {
@@ -85,15 +66,8 @@
       }
     }
   },
-  "difference": "Dew point difference: {val}",
-  "@difference": {
-    "placeholders": {
-      "val": {
-        "type": "String"
-      }
-    }
-  },
-  "hysteresis": "Min. difference / hysteresis: {diff} / {hist}",
+  "difference_title": "Dew point difference",
+  "hysteresis": "Min. difference {diff} K · hysteresis {hist} K",
   "@hysteresis": {
     "placeholders": {
       "diff": {
@@ -115,6 +89,7 @@
   "action_auto": "automatic",
   "action_on": "force on",
   "action_off": "force off",
+  "control": "Control",
   "reasons": "{idx, select, 0{None} 1{No data} 2{Not enough data} 3{Dewpoint > hysteresis} 4{Dewpoint < hysteresis} 5{Dewpoint in between} 6{Inside temperature too low} 7{Outside temperature too low} 8{Inside humidity too low} 9{Soft override on} 10{Soft override off} other{Unknown}}",
   "@reasons": {
     "placeholders": {

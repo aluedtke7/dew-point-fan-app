@@ -50,12 +50,12 @@ void main() {
     };
   }
 
-  DewPointData info(List<Map<String, dynamic>> sensors) {
+  DewPointData info(List<Map<String, dynamic>> sensors, {bool venting = false}) {
     return DewPointData.fromJson({
       'update': '2026-07-27 17:31:00',
       'sensors': sensors,
       'reason': 2,
-      'venting': false,
+      'venting': venting,
       'override': false,
       'remote_override': 0,
       'diff_min': 5,
@@ -71,6 +71,11 @@ void main() {
         locale: const Locale('en'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        // The fan icon turns endlessly while venting, which pumpAndSettle would wait for.
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(disableAnimations: true),
+          child: child!,
+        ),
         home: MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => DewPointBloc(repo: repo)..add(const DewPointNewData())),
@@ -168,8 +173,21 @@ void main() {
     await pumpMainPage(tester, DewPointData());
 
     expect(find.text('Server unreachable'), findsOneWidget);
+    expect(find.text('Unknown'), findsOneWidget);
     expect(find.byType(SensorCard), findsNothing);
     expect(find.text('No sensor data received'), findsNothing);
     expect(find.byIcon(Icons.sensors_off), findsNothing);
+  });
+
+  testWidgets('shows a running fan', (tester) async {
+    await pumpMainPage(
+      tester,
+      info([
+        sensor('Inside', '2026-07-27 17:31:00'),
+        sensor('Outside', '2026-07-27 17:30:00'),
+      ], venting: true),
+    );
+
+    expect(find.text('Running'), findsOneWidget);
   });
 }

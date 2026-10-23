@@ -1,10 +1,13 @@
 import 'package:dpfa/application.dart';
 import 'package:dpfa/bloc/dew_point_bloc.dart';
 import 'package:dpfa/bloc/dew_point_state.dart';
+import 'package:dpfa/components/custom_themes.dart';
 import 'package:dpfa/components/i18n_util.dart';
 import 'package:dpfa/components/settings_dialog.dart';
+import 'package:dpfa/models/extensions.dart';
 import 'package:dpfa/repository/dew_point_repository.dart';
 import 'package:dpfa/widgets/action_choice.dart';
+import 'package:dpfa/widgets/difference_card.dart';
 import 'package:dpfa/widgets/sensor_card.dart';
 import 'package:dpfa/widgets/status_card.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +22,14 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final pageBackground = theme.useMaterial3 ? theme.colorScheme.pageBackground : null;
     return Scaffold(
+      backgroundColor: pageBackground,
       appBar: AppBar(
-        title: Text(i18n(context).title),
-        backgroundColor: Theme.of(context).useMaterial3 ? Theme.of(context).colorScheme.inversePrimary : null,
+        toolbarHeight: 72,
+        title: const _Title(),
+        backgroundColor: pageBackground,
         actions: [
           PopupMenuButton<_MenuAction>(
             onSelected: (action) {
@@ -82,42 +89,129 @@ class MainPage extends StatelessWidget {
             final staleBy = state.data.scanGap;
             return Column(
               children: [
-                if (state.data.update == null)
-                  Container(
-                    width: double.infinity,
-                    color: Colors.red.shade100,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      spacing: 12,
                       children: [
-                        Icon(Icons.cloud_off, color: Colors.red.shade700, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          i18n(context).disconnected,
-                          style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.w500),
-                        ),
+                        if (state.data.update == null) const _DisconnectedBanner(),
+                        StatusCard(dewPointData: state.data),
+                        if (state.data.sensors.length > 1)
+                          DifferenceCard(
+                            difference: state.data.sensors[0].dewPoint - state.data.sensors[1].dewPoint,
+                            diffMin: state.data.diffMin,
+                            hysteresis: state.data.hysteresis,
+                          ),
+                        if (state.data.sensors.isNotEmpty)
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              spacing: 12,
+                              children: [
+                                for (var i = 0; i < state.data.sensors.length && i < 2; i++)
+                                  Expanded(
+                                    child: SensorCard(
+                                      sensorData: state.data.sensors[i],
+                                      staleBy: staleIndex == i ? staleBy : null,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
                       ],
                     ),
                   ),
-                StatusCard(dewPointData: state.data),
-                if (state.data.sensors.isNotEmpty)
-                  SensorCard(
-                    sensorData: state.data.sensors[0],
-                    staleBy: staleIndex == 0 ? staleBy : null,
-                  ),
-                if (state.data.sensors.length > 1)
-                  SensorCard(
-                    sensorData: state.data.sensors[1],
-                    staleBy: staleIndex == 1 ? staleBy : null,
-                  ),
-                const SizedBox(
-                  height: 16,
                 ),
-                const ActionChoice(),
+                const SafeArea(
+                  top: false,
+                  minimum: EdgeInsets.fromLTRB(16, 4, 16, 16),
+                  child: ActionChoice(),
+                ),
               ],
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+/// App title with the time of the last update and a dot showing the
+/// connection state below it.
+class _Title extends StatelessWidget {
+  const _Title();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return BlocBuilder<DewPointBloc, DewPointState>(
+      builder: (context, state) {
+        final update = state.data.update;
+        final Color dotColor;
+        if (update == null) {
+          dotColor = scheme.error;
+        } else if (state.data.staleSensorIndex != null) {
+          dotColor = scheme.warning;
+        } else {
+          // A Material 2 app bar is filled with the primary color itself.
+          dotColor = theme.useMaterial3 ? scheme.primary : scheme.onPrimary;
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(i18n(context).title, style: const TextStyle(fontWeight: FontWeight.w800)),
+            const SizedBox(height: 2),
+            Row(
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: dotColor),
+                ),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    i18n(context).update(update == null ? '---' : update.formatDateTime(i18n(context).localeName)),
+                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _DisconnectedBanner extends StatelessWidget {
+  const _DisconnectedBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: scheme.errorContainer,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.cloud_off, color: scheme.onErrorContainer, size: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              i18n(context).disconnected,
+              style: TextStyle(color: scheme.onErrorContainer, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
       ),
     );
   }
