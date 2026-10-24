@@ -85,10 +85,12 @@ class DewPointRepository {
       var url = Uri.http(dewPointFanUrl, '/override');
       final rcd = RemoteControlData(override: value);
       final body = const JsonEncoder().convert(rcd);
-      final response = await _client.post(
-        url,
-        body: body,
-      ).timeout(const Duration(seconds: 3));
+      final response = await _client
+          .post(
+            url,
+            body: body,
+          )
+          .timeout(const Duration(seconds: 3));
       debugPrint('set override - status code: ${response.statusCode}');
     } catch (error) {
       debugPrint('Error posting override value: $error');

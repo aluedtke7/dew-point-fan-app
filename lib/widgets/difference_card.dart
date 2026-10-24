@@ -31,7 +31,7 @@ class DifferenceCard extends StatelessWidget {
     double fraction(num value) => scale <= 0 ? 0 : (value / scale).clamp(0.0, 1.0);
 
     return SurfaceCard(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -30,9 +30,7 @@ class DewPointData {
     sensorData.removeWhere((element) => element == null);
     return DewPointData(
       update: DateTime.tryParse(json['update'] ?? ''),
-      sensors: sensorData.isEmpty
-          ? []
-          : sensorData.map((e) => SensorData.fromJson(e)).toList(),
+      sensors: sensorData.isEmpty ? [] : sensorData.map((e) => SensorData.fromJson(e)).toList(),
       reason: json['reason'] ?? 0,
       venting: json['venting'],
       override: json['override'],

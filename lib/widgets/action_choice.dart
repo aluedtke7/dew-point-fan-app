@@ -12,7 +12,6 @@ class ActionChoice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<SelectedOverrideBloc>().state;
-    final scheme = Theme.of(context).colorScheme;
 
     void select(int value) {
       context.read<SelectedOverrideBloc>().add(const SelectedOverrideUserTap());
@@ -38,30 +37,17 @@ class ActionChoice extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 8),
-          child: Text(
-            i18n(context).control,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(color: scheme.onSurfaceVariant),
-          ),
-        ),
-        SurfaceCard(
-          padding: const EdgeInsets.all(5),
-          radius: 18,
-          child: Row(
-            spacing: 4,
-            children: [
-              segment(0, i18n(context).action_auto, Icons.auto_mode),
-              segment(1, i18n(context).action_on, Icons.play_arrow),
-              segment(2, i18n(context).action_off, Icons.mode_fan_off),
-            ],
-          ),
-        ),
-      ],
+    return SurfaceCard(
+      padding: const EdgeInsets.all(5),
+      radius: 18,
+      child: Row(
+        spacing: 4,
+        children: [
+          segment(0, i18n(context).action_auto, Icons.auto_mode),
+          segment(1, i18n(context).action_on, Icons.play_arrow),
+          segment(2, i18n(context).action_off, Icons.mode_fan_off),
+        ],
+      ),
     );
   }
 }

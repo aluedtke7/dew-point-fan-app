@@ -25,7 +25,7 @@ void showSettingsDialog(BuildContext context, DewPointRepository dewPointRepo) {
             await dewPointRepo.setUrl(controller.text);
             if (context.mounted) {
               Navigator.pop(context);
-              // Trigger a refresh after URL change if possible, 
+              // Trigger a refresh after URL change if possible,
               // but the stream in DewPointRepository will eventually fetch from new URL.
             }
           },

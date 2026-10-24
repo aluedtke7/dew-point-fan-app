@@ -30,7 +30,7 @@ class StatusCard extends StatelessWidget {
 
     return SurfaceCard(
       radius: 24,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       color: venting ? scheme.primary : null,
       borderColor: venting ? scheme.primary : null,
       child: IconTheme.merge(

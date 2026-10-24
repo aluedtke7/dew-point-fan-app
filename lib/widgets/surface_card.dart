@@ -7,7 +7,7 @@ class SurfaceCard extends StatelessWidget {
   const SurfaceCard({
     super.key,
     required this.child,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     this.radius = 20,
     this.color,
     this.borderColor,
